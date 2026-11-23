@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>GitHub Streak Sentinel — Minimal Glass</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      --font-apple: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif;
+    }
+
+    * {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-apple);
+      background-color: #06080d;
+      color: #f1f3f7;
+      min-height: 100vh;
+      overflow-x: hidden;
+      letter-spacing: -0.015em;
+    }
+
+    /* Ambient Subtle Mesh Background (Apple Vision / Sequoia style) */
+    .ambient-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .ambient-sphere-1 {
+      position: absolute;
+      top: -15%;
+      left: 20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
+      filter: blur(80px);
+    }
+    .ambient-sphere-2 {
+      position: absolute;
+      bottom: -10%;
+      right: 15%;
+      width: 550px;
+      height: 550px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+      filter: blur(80px);
+    }
+
+    /* Ultra Minimal Apple Frosted Glass */
+    .glass-panel {
+      background: rgba(18, 22, 31, 0.45);
+      backdrop-filter: blur(32px) saturate(180%);
+      -webkit-backdrop-filter: blur(32px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 
+        0 24px 48px -12px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+      border-radius: 24px;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.14);
+      transform: translateY(-2px);
+    }
+
+    .glass-btn {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-btn:hover {
+      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(255, 255, 255, 0.18);
+      transform: translateY(-1px);
+    }
+    .glass-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* macOS Traffic Light Buttons */
+    .traffic-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      display: inline-block;
+      transition: opacity 0.2s;
+    }
+    .traffic-red { background: #ff5f57; box-shadow: 0 0 8px rgba(255, 95, 87, 0.4); }
+    .traffic-yellow { background: #febc2e; box-shadow: 0 0 8px rgba(254, 188, 46, 0.4); }
+    .traffic-green { background: #28c840; box-shadow: 0 0 8px rgba(40, 200, 64, 0.4); }
+
+    /* Minimalist Scrollbar */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    /* Subtle Pulsing Aura */
+    @keyframes aura-pulse {
+      0%, 100% { opacity: 0.35; transform: scale(0.96); }
+      50% { opacity: 0.65; transform: scale(1.04); }
+    }
+    .aura-glow {
+      animation: aura-pulse 3.5s infinite ease-in-out;
+    }
+  </style>
+</head>
+
+<body class="p-3.5 sm:p-6 md:p-8 flex flex-col items-center justify-start min-h-screen relative">
+  <!-- Subtle Ambient Background -->
+  <div class="ambient-canvas">
+    <div class="ambient-sphere-1"></div>
+    <div class="ambient-sphere-2"></div>
+  </div>
+
+  <!-- Main Container -->
+  <main class="w-full max-w-4xl glass-panel p-5 sm:p-8 space-y-6 relative z-10 my-auto">
+    
+    <!-- Top Bar: Minimal macOS Header -->
+    <header class="flex items-center justify-between pb-5 border-b border-white/[0.07]">
+      <!-- Left: Traffic Lights & Title -->
+      <div class="flex items-center space-x-3.5">
+        <div class="flex items-center space-x-2">
+          <span class="traffic-dot traffic-red"></span>
+          <span class="traffic-dot traffic-yellow"></span>
+          <span class="traffic-dot traffic-green"></span>
+        </div>
+        <div class="h-4 w-[1px] bg-white/10 hidden sm:block"></div>
+        <div class="flex items-center space-x-2">
+          <span class="text-sm font-semibold tracking-tight text-white/90">
+            Sentinel
+          </span>
+          <span class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-white/[0.06] text-white/50 border border-white/[0.06]">
+            v2.0 Glass
+          </span>
+        </div>
+      </div>
+
+      <!-- Right: Clock & Settings -->
+      <div class="flex items-center space-x-2.5">
+        <div id="liveClock" class="font-mono text-xs text-white/50 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.06]">
+          --:--:--
+        </div>
+        <button 
+          onclick="openModal('settingsModal')" 
+          class="p-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] transition text-white/60 hover:text-white border border-white/[0.07]"
+          title="Pengaturan"
+        >
+          <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- HERO CARD: Minimalist Streak Status -->
+    <section class="glass-card p-6 sm:p-7 space-y-5">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+        
+        <!-- User & Status Info -->
+        <div class="flex items-center space-x-4">
+          <!-- Status Light / Flame Badge -->
+          <div class="relative flex items-center justify-center shrink-0">
+            <div id="statusGlow" class="absolute w-14 h-14 rounded-full bg-amber-500/25 aura-glow"></div>
+            <div id="statusIconBox" class="relative w-12 h-12 rounded-2xl flex items-center justify-center bg-white/[0.04] border border-white/10">
+              <i id="statusIcon" data-lucide="flame" class="w-6 h-6 text-amber-400"></i>
+            </div>
+          </div>
+          
+          <div class="space-y-0.5">
+            <div class="flex items-center space-x-2">
+              <span id="targetStatusPill" class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/20">
+                MEMERIKSA
+              </span>
+              <span class="text-xs text-white/40 font-mono">@<span id="displayUsername">Tryton47</span></span>
+            </div>
+            <h2 id="mainHeadline" class="text-xl sm:text-2xl font-bold tracking-tight text-white">
+              Menghubungkan ke GitHub...
+            </h2>
+            <p id="subHeadline" class="text-xs text-white/50">
+              Target: <b class="text-white/80">9 commit harian</b> (bebas project mana saja)
+            </p>
+          </div>
+        </div>
+
+        <!-- Big Number Indicator -->
+        <div class="flex items-baseline space-x-1.5 self-end sm:self-center px-4 py-2 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
+          <span id="commitCountBig" class="text-3xl sm:text-4xl font-extrabold text-white font-mono">0</span>
+          <span class="text-xs text-white/40 font-mono">/ 9 commit</span>
+        </div>
+      </div>
+
+      <!-- Slim Progress Bar -->
+      <div class="space-y-2 pt-2 border-t border-white/[0.06]">
+        <div class="flex items-center justify-between text-xs">
+          <span class="text-white/60 font-medium flex items-center gap-1.5">
+            <i data-lucide="bell-ring" class="w-3.5 h-3.5 text-indigo-400"></i>
+            Pengingat WhatsApp: <b>Jam 18:00 WIB</b> jika &lt; 9 commit
+          </span>
+          <span id="remainingCountBadge" class="text-amber-300 font-mono font-medium">
+            Kurang 9 lagi
+          </span>
+        </div>
+        
+        <div class="w-full bg-white/[0.06] h-2 rounded-full overflow-hidden p-[1px] border border-white/[0.06]">
+          <div 
+            id="progressBar" 
+            class="h-full rounded-full bg-gradient-to-r from-amber-400 via-indigo-400 to-emerald-400 transition-all duration-700 ease-out" 
+            style="width: 0%"
+          ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACTION GRID: Minimalist Quick Controls -->
+    <section class="space-y-2.5">
+      <div class="flex items-center justify-between px-1">
+        <span class="text-xs font-semibold uppercase tracking-wider text-white/40">
+          Remote Controls (Dari PC / HP)
+        </span>
+        <span class="text-[11px] text-white/30">Instan & Tanpa Lag</span>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+        <!-- Action 1: Force Scan -->
+        <button onclick="triggerRemoteAction('check')" class="glass-btn p-3.5 flex flex-col items-start gap-2 text-left group">
+          <div class="p-2 rounded-xl bg-blue-500/15 text-blue-400 border border-blue-500/20 group-hover:scale-105 transition">
+            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <div class="text-xs font-semibold text-white/90">Scan Live</div>
+            <div class="text-[11px] text-white/40">Cek GitHub detik ini</div>
+          </div>
+        </button>
+
+        <!-- Action 2: Send WA Alert -->
+        <button onclick="triggerRemoteAction('notif')" class="glass-btn p-3.5 flex flex-col items-start gap-2 text-left group">
+          <div class="p-2 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 group-hover:scale-105 transition">
+            <i data-lucide="message-square" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <div class="text-xs font-semibold text-white/90">Tes Notif WA</div>
+            <div class="text-[11px] text-white/40">Kirim alert uji coba</div>
+          </div>
+        </button>
+
+        <!-- Action 3: Open in VS Code -->
+        <button onclick="triggerRemoteAction('open')" class="glass-btn p-3.5 flex flex-col items-start gap-2 text-left group">
+          <div class="p-2 rounded-xl bg-purple-500/15 text-purple-400 border border-purple-500/20 group-hover:scale-105 transition">
+            <i data-lucide="external-link" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <div class="text-xs font-semibold text-white/90">Buka VS Code</div>
+            <div class="text-[11px] text-white/40">Buka editor di PC</div>
+          </div>
+        </button>
+
+        <!-- Action 4: Auto Commit -->
+        <button onclick="openModal('commitModal')" class="glass-btn p-3.5 flex flex-col items-start gap-2 text-left group">
+          <div class="p-2 rounded-xl bg-amber-500/15 text-amber-400 border border-amber-500/20 group-hover:scale-105 transition">
+            <i data-lucide="git-commit" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <div class="text-xs font-semibold text-white/90">Auto Commit</div>
+            <div class="text-[11px] text-white/40">+1 commit dari HP</div>
+          </div>
+        </button>
+      </div>
+    </section>
+
+    <!-- DUAL MINIMAL SECTION: WHATSAPP BOT & CONSOLE -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      
+      <!-- Card: WhatsApp & HP Hub -->
+      <div class="glass-card p-4 sm:p-5 space-y-3.5 flex flex-col justify-between">
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <i data-lucide="smartphone" class="w-4 h-4 text-emerald-400"></i>
+              <span class="text-xs font-semibold text-white/90">WhatsApp Remote Hub</span>
+            </div>
+            <span class="text-[11px] font-mono text-emerald-400/80 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+              082141635002
+            </span>
+          </div>
+          <p class="text-xs text-white/50 leading-relaxed">
+            Perintah yang bisa kamu kirimkan dari chat WhatsApp kapan saja:
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 text-xs font-mono">
+          <button onclick="triggerRemoteAction('status')" class="p-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.05] text-left transition flex items-center justify-between">
+            <span class="text-emerald-400">!status</span>
+            <span class="text-[10px] text-white/40 font-sans">Cek progress</span>
+          </button>
+          <button onclick="triggerRemoteAction('check')" class="p-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.05] text-left transition flex items-center justify-between">
+            <span class="text-blue-400">!check</span>
+            <span class="text-[10px] text-white/40 font-sans">Force scan</span>
+          </button>
+          <button onclick="triggerRemoteAction('open')" class="p-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.05] text-left transition flex items-center justify-between">
+            <span class="text-purple-400">!open</span>
+            <span class="text-[10px] text-white/40 font-sans">Buka di PC</span>
+          </button>
+          <button onclick="openModal('commitModal')" class="p-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.05] text-left transition flex items-center justify-between">
+            <span class="text-amber-400">!commit</span>
+            <span class="text-[10px] text-white/40 font-sans">Auto push</span>
+          </button>
+        </div>
+
+        <div class="pt-2 border-t border-white/[0.06] flex items-center justify-between text-[11px] text-white/40">
+          <span>Tautan HP: <code class="text-indigo-300 font-mono">192.168.0.102:8000</code></span>
+          <button onclick="copyText('192.168.0.102:8000')" class="text-white/60 hover:text-white transition">Salin</button>
+        </div>
+      </div>
+
+      <!-- Card: Clean Minimalist Console -->
+      <div class="glass-card p-4 sm:p-5 flex flex-col justify-between space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-1.5 text-xs text-white/60 font-mono">
+            <i data-lucide="terminal" class="w-3.5 h-3.5 text-indigo-400"></i>
+            <span>console</span>
+          </div>
+          <button onclick="clearTerminal()" class="text-[11px] text-white/30 hover:text-white/70 transition">
+            Bersihkan
+          </button>
+        </div>
+
+        <div id="terminalBody" class="font-mono text-[11px] text-white/70 h-32 overflow-y-auto space-y-1 pr-1">
+          <div class="text-white/30">[Ready] Apple Glass Sentinel aktif.</div>
+          <div class="text-white/30">[Rule] Target harian: 9 commit. Pengingat WA: 18:00 WIB.</div>
+        </div>
+
+        <form onsubmit="handleTerminalSubmit(event)" class="flex items-center gap-2 pt-2 border-t border-white/[0.06]">
+          <span class="text-indigo-400 font-mono text-xs">&gt;</span>
+          <input 
+            type="text" 
+            id="terminalInput" 
+            placeholder="Ketik perintah (!status, !open)..." 
+            class="flex-1 bg-transparent border-0 outline-none font-mono text-xs text-white placeholder-white/20"
+          />
+          <button type="submit" class="px-2.5 py-1 rounded-lg bg-white/[0.06] hover:bg-white/[0.1] text-xs font-mono text-white/80 transition">
+            Kirim
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- Active Repositories Pill -->
+    <div class="px-1 flex flex-wrap items-center gap-2 text-xs">
+      <span class="text-white/40 text-[11px] font-medium flex items-center gap-1">
+        <i data-lucide="folder-git-2" class="w-3 h-3 text-indigo-400"></i> Repositori Aktif:
+      </span>
+      <div id="repoPills" class="flex flex-wrap gap-1.5">
+        <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-white/[0.03] border border-white/[0.05] text-white/40">
+          Belum ada aktivitas hari ini
+        </span>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none"></div>
+
+  <!-- MODAL: AUTO COMMIT -->
+  <div id="commitModal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="glass-panel max-w-sm w-full p-5 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <i data-lucide="git-commit" class="w-4 h-4 text-amber-400"></i>
+          <h3 class="text-sm font-semibold text-white">Auto-Commit Instan</h3>
+        </div>
+        <button onclick="closeModal('commitModal')" class="text-white/40 hover:text-white">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <p class="text-xs text-white/60 leading-relaxed">
+        Menambahkan timestamp ke repository kamu lalu otomatis melakukan <code>git push</code> agar streak & target commit bertambah!
+      </p>
+      <div>
+        <label class="block text-[11px] font-medium text-white/70 mb-1">Pesan Commit (Opsional)</label>
+        <input 
+          type="text" 
+          id="customCommitMsg" 
+          placeholder="chore: streak sentinel progress" 
+          class="w-full px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white text-xs outline-none focus:border-amber-400/50"
+        />
+      </div>
+      <div class="flex justify-end gap-2 pt-1">
+        <button onclick="closeModal('commitModal')" class="px-3 py-1.5 rounded-xl bg-white/[0.04] text-white/60 text-xs">
+          Batal
+        </button>
+        <button onclick="executeEmergencyCommit()" class="px-4 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-black text-xs font-semibold transition">
+          Commit & Push
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: SETTINGS -->
+  <div id="settingsModal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="glass-panel max-w-md w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-white/[0.07]">
+        <div class="flex items-center space-x-2">
+          <i data-lucide="sliders-horizontal" class="w-4 h-4 text-indigo-400"></i>
+          <h3 class="text-sm font-semibold text-white">Pengaturan Sentinel</h3>
+        </div>
+        <button onclick="closeModal('settingsModal')" class="text-white/40 hover:text-white">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <form id="settingsForm" onsubmit="saveSettings(event)" class="space-y-3.5 text-xs">
+        <div>
+          <label class="block font-medium text-white/70 mb-1">GitHub Username</label>
+          <input type="text" id="cfgGithubUser" class="w-full px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white outline-none focus:border-indigo-400" required />
+        </div>
+
+        <div>
+          <label class="block font-medium text-white/70 mb-1">GitHub PAT Token (Opsional, untuk membaca repo private)</label>
+          <input type="password" id="cfgGithubToken" placeholder="ghp_xxxx" class="w-full px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white outline-none focus:border-indigo-400" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-medium text-white/70 mb-1">Target Commit Harian</label>
+            <input type="number" id="cfgMinCommits" min="1" max="100" class="w-full px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white outline-none focus:border-indigo-400" value="9" required />
+          </div>
+          <div>
+            <label class="block font-medium text-white/70 mb-1">Jam Peringatan WA (WIB)</label>
+            <input type="number" id="cfgReminderHour" min="0" max="23" class="w-full px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white outline-none focus:border-indigo-400" value="18" required />
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-medium text-white/70 mb-1">Default Workspace Path (PC)</label>
+          <input type="text" id="cfgProjectPath" class="w-full px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white outline-none focus:border-indigo-400" required />
+        </div>
+
+        <div class="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="font-semibold text-blue-400 flex items-center gap-1.5">
+              <i data-lucide="send" class="w-3.5 h-3.5"></i> Telegram Bot (Paling Mudah & Gratis)
+            </span>
+            <span class="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full">Rekomendasi</span>
+          </div>
+          <div>
+            <label class="block text-white/60 mb-1">Telegram Bot Token (dari @BotFather)</label>
+            <input type="password" id="cfgTgToken" placeholder="123456789:ABCdefGhIjk..." class="w-full px-3 py-1.5 rounded-lg bg-black/40 border border-white/10 text-white outline-none focus:border-blue-400" />
+          </div>
+          <div>
+            <label class="block text-white/60 mb-1">Telegram Chat ID (dari @userinfobot)</label>
+            <input type="text" id="cfgTgChatId" placeholder="contoh: 123456789" class="w-full px-3 py-1.5 rounded-lg bg-black/40 border border-white/10 text-white outline-none focus:border-blue-400" />
+          </div>
+        </div>
+
+        <div class="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-2.5">
+          <span class="font-semibold text-emerald-400 block">WhatsApp Provider (Opsional / Fonnte)</span>
+          <div>
+            <label class="block text-white/60 mb-1">Nomor WhatsApp Tujuan</label>
+            <input type="text" id="cfgWaPhone" value="082141635002" class="w-full px-3 py-1.5 rounded-lg bg-black/40 border border-white/10 text-white outline-none" />
+          </div>
+          <div>
+            <label class="block text-white/60 mb-1">Fonnte API Token (fonnte.com)</label>
+            <input type="password" id="cfgFonnteToken" placeholder="Token API" class="w-full px-3 py-1.5 rounded-lg bg-black/40 border border-white/10 text-white outline-none" />
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeModal('settingsModal')" class="px-3.5 py-1.5 rounded-xl bg-white/[0.04] text-white/60">
+            Tutup
+          </button>
+          <button type="submit" class="px-4 py-1.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 text-white font-semibold transition">
+            Simpan
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('liveClock').textContent = now.toLocaleTimeString('id-ID');
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function printTerm(text, type = "normal") {
+      const tb = document.getElementById('terminalBody');
+      const div = document.createElement('div');
+      const time = new Date().toLocaleTimeString('id-ID');
+      
+      if (type === "cmd") {
+        div.className = "text-indigo-300";
+        div.innerHTML = `<span class="text-white/30">[${time}]</span> &gt; ${escapeHtml(text)}`;
+      } else if (type === "success") {
+        div.className = "text-emerald-400";
+        div.innerHTML = `<span class="text-white/30">[${time}]</span> ${escapeHtml(text).replace(/\n/g, '<br/>')}`;
+      } else if (type === "error") {
+        div.className = "text-red-400";
+        div.innerHTML = `<span class="text-white/30">[${time}]</span> ${escapeHtml(text).replace(/\n/g, '<br/>')}`;
+      } else {
+        div.className = "text-white/70";
+        div.innerHTML = `<span class="text-white/30">[${time}]</span> ${escapeHtml(text).replace(/\n/g, '<br/>')}`;
+      }
+
+      tb.appendChild(div);
+      tb.scrollTop = tb.scrollHeight;
+    }
+
+    function clearTerminal() {
+      document.getElementById('terminalBody').innerHTML = '';
+      printTerm("Terminal dibersihkan.", "normal");
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.innerText = text;
+      return div.innerHTML;
+    }
+
+    function showToast(message, type = "info") {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = "glass-panel px-4 py-2.5 text-xs font-medium text-white pointer-events-auto flex items-center gap-2 border-white/10 shadow-2xl transition duration-300 transform translate-y-2 opacity-0";
+      
+      let icon = "info";
+      if (type === "success") icon = "check";
+      if (type === "error") icon = "alert-circle";
+
+      toast.innerHTML = `<i data-lucide="${icon}" class="w-3.5 h-3.5 text-indigo-400"></i> <span>${message}</span>`;
+      container.appendChild(toast);
+      lucide.createIcons();
+
+      setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 50);
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+    function copyText(text) {
+      navigator.clipboard.writeText(text).then(() => showToast("Tautan disalin!", "success"));
+    }
+
+    async function fetchStatus() {
+      try {
+        const res = await fetch('/api/status');
+        const data = await res.json();
+        renderStatus(data);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function renderStatus(data) {
+      document.getElementById('displayUsername').textContent = data.username;
+      document.getElementById('commitCountBig').textContent = data.commit_count;
+      
+      const count = data.commit_count;
+      const target = data.target_commits || 9;
+      const remaining = data.remaining !== undefined ? data.remaining : Math.max(0, target - count);
+      const percent = data.percentage !== undefined ? data.percentage : Math.min(100, Math.floor((count / target) * 100));
+
+      const pill = document.getElementById('targetStatusPill');
+      const headline = document.getElementById('mainHeadline');
+      const progressBar = document.getElementById('progressBar');
+      const remainingBadge = document.getElementById('remainingBadge');
+      const statusGlow = document.getElementById('statusGlow');
+      const statusIcon = document.getElementById('statusIcon');
+
+      progressBar.style.width = `${percent}%`;
+
+      if (data.committed) {
+        pill.className = "text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20";
+        pill.textContent = `TARGET TERCAPAI (${count}/${target})`;
+        headline.textContent = `Target Harian Aman (${count} Commit) 🎉`;
+        headline.className = "text-xl sm:text-2xl font-bold tracking-tight text-emerald-300";
+
+        remainingBadge.className = "text-emerald-300 font-mono font-medium";
+        remainingBadge.textContent = "Target 9 commit terpenuhi ✅";
+
+        statusGlow.className = "absolute w-14 h-14 rounded-full bg-emerald-500/25 aura-glow";
+        statusIcon.className = "w-6 h-6 text-emerald-400";
+      } else {
+        pill.className = "text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/20";
+        pill.textContent = `PROGRESS: ${count}/${target} COMMIT`;
+        headline.textContent = `Baru ${count} dari ${target} Commit Hari Ini`;
+        headline.className = "text-xl sm:text-2xl font-bold tracking-tight text-amber-300";
+
+        remainingBadge.className = "text-amber-300 font-mono font-medium";
+        remainingBadge.textContent = `Kurang ${remaining} commit lagi`;
+
+        statusGlow.className = "absolute w-14 h-14 rounded-full bg-amber-500/25 aura-glow";
+        statusIcon.className = "w-6 h-6 text-amber-400";
+      }
+
+      // Repos
+      const pillsContainer = document.getElementById('repoPills');
+      if (data.repos && data.repos.length > 0) {
+        pillsContainer.innerHTML = data.repos.map(r => `
+          <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-white/70 font-mono">
+            ${r}
+          </span>
+        `).join('');
+      } else {
+        pillsContainer.innerHTML = `<span class="text-[11px] px-2.5 py-0.5 rounded-full bg-white/[0.02] border border-white/[0.04] text-white/30">Belum ada aktivitas hari ini</span>`;
+      }
+      lucide.createIcons();
+    }
+
+    async function triggerRemoteAction(action) {
+      printTerm(`Action: ${action}...`, "cmd");
+      showToast(`Menjalankan: ${action}...`, "info");
+      
+      try {
+        const res = await fetch(`/api/command`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ command: `!${action}` })
+        });
+        const data = await res.json();
+        printTerm(data.output, "success");
+        showToast("Perintah berhasil!", "success");
+        fetchStatus();
+      } catch (err) {
+        printTerm(`Gagal: ${err}`, "error");
+      }
+    }
+
+    async function executeEmergencyCommit() {
+      const msg = document.getElementById('customCommitMsg').value;
+      closeModal('commitModal');
+      printTerm(`Auto-commit: ${msg || 'default'}...`, "cmd");
+      showToast("Sedang push commit ke GitHub...", "info");
+
+      try {
+        const res = await fetch(`/api/command`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ command: `!commit ${msg}` })
+        });
+        const data = await res.json();
+        printTerm(data.output, "success");
+        showToast("Commit berhasil!", "success");
+        fetchStatus();
+      } catch (err) {
+        printTerm(`Error: ${err}`, "error");
+      }
+    }
+
+    async function handleTerminalSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('terminalInput');
+      const val = input.value.trim();
+      if (!val) return;
+      
+      printTerm(val, "cmd");
+      input.value = '';
+
+      try {
+        const res = await fetch(`/api/command`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ command: val })
+        });
+        const data = await res.json();
+        printTerm(data.output, "normal");
+        fetchStatus();
+      } catch (err) {
+        printTerm(`Error: ${err}`, "error");
+      }
+    }
+
+    async function loadSettings() {
+      try {
+        const res = await fetch('/api/settings');
+        const data = await res.json();
+        document.getElementById('cfgGithubUser').value = data.github_username || '';
+        document.getElementById('cfgProjectPath').value = data.project_path || '';
+        document.getElementById('cfgWaPhone').value = data.whatsapp_phone || '';
+        document.getElementById('cfgFonnteToken').value = data.fonnte_token || '';
+        document.getElementById('cfgTgToken').value = data.telegram_bot_token || '';
+        document.getElementById('cfgTgChatId').value = data.telegram_chat_id || '';
+        document.getElementById('cfgMinCommits').value = data.min_commits || 9;
+        document.getElementById('cfgReminderHour').value = data.reminder_hour || 18;
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    async function saveSettings(e) {
+      e.preventDefault();
+      const payload = {
+        github_username: document.getElementById('cfgGithubUser').value,
+        github_token: document.getElementById('cfgGithubToken').value || undefined,
+        project_path: document.getElementById('cfgProjectPath').value,
+        whatsapp_phone: document.getElementById('cfgWaPhone').value,
+        fonnte_token: document.getElementById('cfgFonnteToken').value,
+        telegram_bot_token: document.getElementById('cfgTgToken').value,
+        telegram_chat_id: document.getElementById('cfgTgChatId').value,
+        min_commits: parseInt(document.getElementById('cfgMinCommits').value) || 9,
+        reminder_hour: parseInt(document.getElementById('cfgReminderHour').value) || 18,
+      };
+
+      try {
+        const res = await fetch('/api/settings', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(payload)
+        });
+        const d = await res.json();
+        showToast(d.message || "Tersimpan!", "success");
+        closeModal('settingsModal');
+        fetchStatus();
+      } catch (err) {
+        showToast("Gagal menyimpan", "error");
+      }
+    }
+
+    loadSettings();
+    fetchStatus();
+    setInterval(fetchStatus, 30000);
+  </script>
+</body>
+</html>
