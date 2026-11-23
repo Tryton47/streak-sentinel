@@ -1,16 +1,25 @@
 """
 GitHub Activity Checker.
-Fetches user public events and determines whether a commit has been pushed today.
+Fetches user events and determines whether a commit has been pushed today.
+Supports both public repos and private repos (when GITHUB_TOKEN is provided).
 """
+import os
 from datetime import datetime, timezone
 import httpx
 
 class GitHubStreakChecker:
-    """Checks GitHub activity using the official public events API."""
+    """Checks GitHub activity using the official API (supports public & private repos)."""
 
-    def __init__(self, username: str):
+    def __init__(self, username: str, github_token: str = None):
         self.username = username
-        self.api_url = f"https://api.github.com/users/{username}/events/public"
+        self.token = github_token or os.getenv("GITHUB_TOKEN", "").strip()
+        
+        # If token is present, use authenticated events (includes private repos)
+        # Otherwise fallback to public events
+        if self.token:
+            self.api_url = f"https://api.github.com/users/{username}/events"
+        else:
+            self.api_url = f"https://api.github.com/users/{username}/events/public"
 
     def has_committed_today(self) -> tuple[bool, int, list[str]]:
         """
@@ -21,12 +30,20 @@ class GitHubStreakChecker:
             "User-Agent": "GitHub-Streak-Sentinel/1.0",
             "Accept": "application/vnd.github.v3+json",
         }
+        if self.token:
+            headers["Authorization"] = f"Bearer {self.token}"
 
         try:
             with httpx.Client(timeout=15.0) as client:
                 res = client.get(self.api_url, headers=headers)
                 if res.status_code != 200:
-                    return False, 0, []
+                    # Fallback to public if token fails or has restricted scope
+                    if self.token:
+                        res = client.get(f"https://api.github.com/users/{self.username}/events/public", headers={"User-Agent": "GitHub-Streak-Sentinel/1.0"})
+                        if res.status_code != 200:
+                            return False, 0, []
+                    else:
+                        return False, 0, []
 
                 events = res.json()
         except Exception:
@@ -47,7 +64,6 @@ class GitHubStreakChecker:
                 continue
 
             try:
-                # Format: 2026-11-16T04:00:11Z
                 dt = datetime.strptime(created_at_str, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
                 if dt.date() == today_date:
                     payload = event.get("payload", {})
