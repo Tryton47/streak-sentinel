@@ -129,8 +129,22 @@ async def get_streak_status():
         "repos": repos,
         "reminder_hour": int(os.getenv("REMINDER_HOUR", "18")),
         "telegram_active": bool(os.getenv("TELEGRAM_BOT_TOKEN")),
+        "telegram_connected": telegram_bot.is_connected,
+        "telegram_last_seen": telegram_bot.last_seen_str,
+        "telegram_chat_id": os.getenv("TELEGRAM_CHAT_ID", ""),
+        "project_path": controller.project_path,
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
+
+@app.post("/api/telegram/ping")
+async def ping_telegram():
+    """Sends an instant ping test message to user's Telegram."""
+    success = await telegram_bot.send_message(
+        "🏓 *Ping Test dari Apple Glass Dashboard!*\n"
+        "⚡ Koneksi antara PC dan Telegram kamu dalam status *Aktif & Prima*. 🚀\n"
+        f"🕒 Waktu server: {datetime.now().strftime('%H:%M:%S WIB')}"
+    )
+    return {"success": success}
 
 class CommandRequest(BaseModel):
     command: str
