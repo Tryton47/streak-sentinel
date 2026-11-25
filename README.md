@@ -1,68 +1,80 @@
 # 🛡️ GitHub Streak Sentinel — Apple Glass Edition 🍏
 
-Sistem penjaga streak GitHub otomatis dengan tampilan **Liquid Frosted Glass ala Apple macOS / iOS**, notifikasi real-time ke **WhatsApp**, dan fitur **Remote Control dari Smartphone**!
+Sistem penjaga streak GitHub otomatis dengan tampilan **Liquid Frosted Glass ala Apple macOS / iOS**, notifikasi & kontrol 2 arah via **Telegram Bot (@tryton_streak_bot)** & **WhatsApp**, serta target harian **minimal 9 commit** dengan pengingat jam 18:00 WIB!
 
 ---
 
 ## ✨ Fitur Unggulan
 
 ### 1. 🍏 Apple Liquid Glassmorphism Dashboard
-- Desain antarmuka transparan frosted glass mewah berbasis **macOS Sequoia / iOS 18**.
-- Background ambient mesh dinamis dengan aksen glow & SF Pro typography.
-- Status streak real-time: indikator cincin api animasi (Safe vs At Risk), commit counter hari ini, dan daftar repositori aktif.
-- **Konsol Terminal Glass**: Eksekusi perintah langsung di web UI.
+- Desain antarmuka transparan frosted glass mewah berbasis **macOS Sequoia / iOS 18** (SF Pro, ambient glow mesh, ultra-frosted blur).
+- **Apple Fitness Circular Progress Ring**: Cincin SVG dinamis yang menampilkan target harian minimal 9 commit.
+- **Beacon Status Telegram Live**: Indikator hijau real-time `🟢 Online` yang terhubung langsung ke bot Telegram dengan tombol tes latency *Ping*.
+- **Floating Mobile Glass Dock**: Navigasi pil mengambang di layar smartphone untuk kontrol cepat sekali sentuh.
+- **Konsol Terminal Glass**: Eksekusi perintah shell & git langsung dari dashboard web.
 
-### 2. 📱 Akses & Kontrol Penuh dari HP (Smartphone)
-- Cukup buka browser HP di `http://192.168.0.102:8000` (atau IP lokal Wi-Fi PC kamu).
-- Responsive: Terasa seperti aplikasi widget native iOS di smartphone.
-- Tombol aksi sekali sentuh dari HP:
-  - ⚡ **Periksa Sekarang**: Scan live API GitHub detik ini.
-  - 💬 **Kirim Notifikasi WA**: Tes tembak alert ke WhatsApp & layar PC.
-  - 💻 **Buka di VS Code**: Luncurkan editor workspace di komputer dari jarak jauh!
-  - 🚀 **Emergency Commit**: Auto-commit & git push instan dari HP untuk menyelamatkan grafik commit hijau.
+### 2. 🤖 Telegram 2-Way Bot Remote Control (@tryton_streak_bot)
+- Bot interaktif 2 arah tanpa biaya:
+  - `/status` : Cek progress commit hari ini dan jarak menuju target 9 commit.
+  - `/check`  : Scan instan ke GitHub API.
+  - `/open`   : Luncurkan workspace VS Code di PC langsung dari chat Telegram HP!
+  - `/commit <pesan>` : Auto-commit & git push darurat dari HP untuk mengamankan streak.
+  - `/ping`   : Tes latensi dan stabilitas koneksi antara Telegram dan PC.
+  - `/web`    : Tampilkan link langsung ke Apple Glass Dashboard.
+  - `/cmd <perintah>` : Jalankan perintah shell / script di project PC.
+  - `/notif`  : Tembak notifikasi toast native ke layar PC.
 
-### 3. 💬 Integrasi WhatsApp 2-Way Bot
-- Notifikasi pengingat otomatis jika belum ada commit hingga jam target (misal jam 19.00 malam).
-- **Remote Commands**: Kamu bisa balas chat WhatsApp dari HP dengan perintah:
-  - `!status` : Cek apakah streak hari ini sudah aman
-  - `!check`  : Scan GitHub & picu notifikasi
-  - `!open`   : Buka project di VS Code PC kamu
-  - `!commit <pesan>` : Auto-commit darurat dari WhatsApp!
+### 3. 🎯 Aturan Target 9 Commit & Peringatan 18:00 WIB
+- Menghitung akumulasi seluruh commit hari ini di semua repositori akun kamu.
+- Jika sampai pukul **18:00 WIB** target 9 commit belum tercapai, Sentinel secara otomatis mengirimkan alert ke:
+  1. Telegram Bot di HP kamu.
+  2. Native Windows 10/11 Toast Notification di monitor PC.
+  3. WhatsApp (opsional via Fonnte Gateway).
+
+### 4. 🔄 24/7 Background Persistence & Auto-Start
+- **Zero-Window Silent Runner (`start_sentinel_silent.vbs`)**: Menjalankan Sentinel di background tanpa ada jendela CMD yang mengganggu.
+- **Windows Startup Installer (`install_autostart.ps1`)**: Sekali klik untuk mendaftarkan Sentinel ke Startup Windows agar selalu aktif otomatis setelah PC menyala.
 
 ---
 
 ## 🚀 Cara Menjalankan
 
-### A. Melalui Double-Click (Paling Mudah di Windows)
+### A. Background Otomatis (Rekomendasi)
+Klik dua kali file:
+```
+start_sentinel_silent.vbs
+```
+Sentinel akan langsung aktif di latar belakang (background) tanpa jendela terminal.
+
+### B. Dashboard Interaktif (Dengan Terminal)
 Klik dua kali file:
 ```
 run_dashboard.bat
 ```
 
-### B. Melalui Terminal / Command Prompt
-```bash
-# Jalankan Apple Glass Dashboard & Remote Server
-python main.py --server
-
-# Atau jalankan scan CLI biasa
-python main.py
+### C. Pasang ke Startup Windows (Otomatis Aktif Saat PC Nyala)
+Buka PowerShell dan jalankan:
+```powershell
+powershell -ExecutionPolicy Bypass -File install_autostart.ps1
 ```
-
-Buka URL berikut:
-- **Di Komputer (PC)**: [http://localhost:8000](http://localhost:8000)
-- **Di Smartphone (HP)**: `http://192.168.0.102:8000` *(pastikan HP & PC di Wi-Fi yang sama)*
 
 ---
 
-## ⚙️ Pengaturan WhatsApp di `.env`
+## 🌐 Akses Web Dashboard
 
-Edit file `.env` (atau ubah langsung melalui menu Pengaturan ⚙️ di Glass UI Dashboard):
+- **Di Komputer (PC)**: [http://localhost:8000](http://localhost:8000)
+- **Di Smartphone (HP)**: `http://192.168.0.102:8000` *(pastikan HP & PC terhubung ke Wi-Fi yang sama)*
+
+---
+
+## ⚙️ Konfigurasi `.env`
+
+File `.env` tersimpan aman di direktori lokal PC (tidak terunggah ke git public):
 ```env
 GITHUB_USERNAME=Tryton47
 PROJECT_PATH=D:\scrapton-3platform
-WHATSAPP_PHONE=08xxxxxxxxxx
-FONNTE_TOKEN=your_token_from_fonnte
-REMINDER_HOUR=19
+MIN_COMMITS=9
+REMINDER_HOUR=18
+TELEGRAM_BOT_TOKEN=9104924567:AAHItsz9WMl6J17v5MQC7Ec0cscHtkwTBj0
+TELEGRAM_CHAT_ID=9288483071
 ```
-
-> 💡 *Untuk WhatsApp Gateway gratis & cepat di Indonesia, kamu bisa mendaftar akun di [fonnte.com](https://fonnte.com), lalu salin Token ke `.env`.*
