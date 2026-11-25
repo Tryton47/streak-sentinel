@@ -38,6 +38,8 @@ class RemoteController:
             return self._handle_emergency_commit(arg)
         elif action in ("web", "dashboard", "link", "url"):
             return self._handle_web_link()
+        elif action in ("ping", "p"):
+            return self._handle_ping()
         elif action in ("cmd", "run", "exec", "sh"):
             return self._handle_run_command(arg)
         elif action in ("notif", "alert", "test"):
@@ -155,6 +157,16 @@ class RemoteController:
             "💡 _Buka link HP di Safari/Chrome, lalu tap 'Add to Home Screen' agar jadi seperti aplikasi iPhone/Android!_"
         )
 
+    def _handle_ping(self) -> str:
+        now_str = datetime.now().strftime("%H:%M:%S WIB")
+        return (
+            f"🏓 *Pong!*\n"
+            f"⚡ Koneksi Bot: *Online & Responsif*\n"
+            f"👤 Akun GitHub: @{self.username}\n"
+            f"💻 Host: Windows PC\n"
+            f"🕒 Server Time: {now_str}"
+        )
+
     def _handle_run_command(self, cmd: str) -> str:
         if not cmd:
             return "⚠️ Mohon sertakan perintah yang ingin dijalankan.\nContoh: `/cmd git status` atau `/cmd python main.py`"
@@ -197,11 +209,14 @@ class RemoteController:
             f"📱 *REMOTE SENTINEL COMMANDS (DARI HP)*\n\n"
             f"🎯 *Target Harian*: Minimal {target} Commit (bebas repo mana pun)\n"
             f"⏰ *Deadline Notif*: Jam 18:00 WIB jika belum {target} commit\n\n"
-            "• `!status` - Cek progress commit hari ini (misal: 4/9)\n"
-            "• `!check` - Scan langsung ke GitHub API & cek status\n"
-            "• `!open` - Buka workspace di komputer PC dari jarak jauh\n"
-            "• `!commit <pesan>` - Auto-commit & push langsung dari chat HP\n"
-            "• `!notif` - Tes kirim notifikasi ke PC & WhatsApp\n"
-            "• `!help` - Tampilkan panduan ini\n\n"
-            "💡 _Bisa diawali tanda seru (!) atau slash (/), contoh: !status_"
+            "• `/status` - Cek progress commit hari ini (misal: 4/9)\n"
+            "• `/check` - Scan langsung ke GitHub API & cek status\n"
+            "• `/open` - Buka workspace di komputer PC dari jarak jauh\n"
+            "• `/commit <pesan>` - Auto-commit & push langsung dari chat HP\n"
+            "• `/ping` - Cek koneksi & latensi bot ke PC\n"
+            "• `/web` - Tampilkan link dashboard Apple Glass\n"
+            "• `/cmd <perintah>` - Jalankan command terminal di project PC\n"
+            "• `/notif` - Tes kirim notifikasi ke PC & Telegram\n"
+            "• `/help` - Tampilkan panduan ini\n\n"
+            "💡 _Bisa diawali tanda seru (!) atau slash (/), contoh: /status_"
         )
