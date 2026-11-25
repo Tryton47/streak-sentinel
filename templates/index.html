@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>GitHub Streak Sentinel — Minimal Glass</title>
+  <title>GitHub Streak Sentinel — Apple Glass</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -11,10 +11,10 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
     :root {
-      --font-apple: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif;
+      --font-apple: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Plus Jakarta Sans", sans-serif;
     }
 
     * {
@@ -24,14 +24,14 @@
 
     body {
       font-family: var(--font-apple);
-      background-color: #06080d;
-      color: #f1f3f7;
+      background-color: #05070c;
+      color: #f3f5f9;
       min-height: 100vh;
       overflow-x: hidden;
       letter-spacing: -0.015em;
     }
 
-    /* Ambient Subtle Mesh Background (Apple Vision / Sequoia style) */
+    /* Apple Vision Dynamic Mesh Background */
     .ambient-canvas {
       position: fixed;
       top: 0;
@@ -42,64 +42,73 @@
       z-index: 0;
       overflow: hidden;
     }
-    .ambient-sphere-1 {
+    .ambient-glow-1 {
       position: absolute;
-      top: -15%;
-      left: 20%;
+      top: -10%;
+      left: 15%;
+      width: 650px;
+      height: 650px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 65%);
+      filter: blur(85px);
+    }
+    .ambient-glow-2 {
+      position: absolute;
+      bottom: -15%;
+      right: 15%;
       width: 600px;
       height: 600px;
-      background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
-      filter: blur(80px);
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, transparent 65%);
+      filter: blur(85px);
     }
-    .ambient-sphere-2 {
+    .ambient-glow-3 {
       position: absolute;
-      bottom: -10%;
-      right: 15%;
-      width: 550px;
-      height: 550px;
-      background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+      top: 45%;
+      left: 55%;
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(236, 72, 153, 0.08) 0%, transparent 65%);
       filter: blur(80px);
     }
 
-    /* Ultra Minimal Apple Frosted Glass */
+    /* VisionOS Liquid Frosted Acrylic Panels */
     .glass-panel {
-      background: rgba(18, 22, 31, 0.45);
-      backdrop-filter: blur(32px) saturate(180%);
-      -webkit-backdrop-filter: blur(32px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(15, 19, 29, 0.52);
+      backdrop-filter: blur(36px) saturate(190%);
+      -webkit-backdrop-filter: blur(36px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.09);
       box-shadow: 
-        0 24px 48px -12px rgba(0, 0, 0, 0.6),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
-      border-radius: 24px;
+        0 30px 60px -15px rgba(0, 0, 0, 0.65),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
+      border-radius: 28px;
     }
 
     .glass-card {
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      background: rgba(255, 255, 255, 0.035);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.09);
+      border-radius: 22px;
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .glass-card:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.055);
+      border-color: rgba(255, 255, 255, 0.16);
       transform: translateY(-2px);
     }
 
     .glass-btn {
       background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.09);
-      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
-      border-radius: 14px;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.14), 0 8px 20px -6px rgba(0, 0, 0, 0.4);
+      border-radius: 16px;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .glass-btn:hover {
-      background: rgba(255, 255, 255, 0.09);
-      border-color: rgba(255, 255, 255, 0.18);
-      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.095);
+      border-color: rgba(255, 255, 255, 0.22);
+      transform: translateY(-2px) scale(1.015);
     }
     .glass-btn:active {
       transform: scale(0.97);
@@ -107,15 +116,24 @@
 
     /* macOS Traffic Light Buttons */
     .traffic-dot {
-      width: 11px;
-      height: 11px;
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
       display: inline-block;
-      transition: opacity 0.2s;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4);
     }
-    .traffic-red { background: #ff5f57; box-shadow: 0 0 8px rgba(255, 95, 87, 0.4); }
-    .traffic-yellow { background: #febc2e; box-shadow: 0 0 8px rgba(254, 188, 46, 0.4); }
-    .traffic-green { background: #28c840; box-shadow: 0 0 8px rgba(40, 200, 64, 0.4); }
+    .traffic-red { background: #ff5f57; }
+    .traffic-yellow { background: #febc2e; }
+    .traffic-green { background: #28c840; }
+
+    /* SVG Circular Progress Ring */
+    .circle-progress-bg {
+      stroke: rgba(255, 255, 255, 0.08);
+    }
+    .circle-progress-bar {
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
     /* Minimalist Scrollbar */
     ::-webkit-scrollbar {
@@ -123,37 +141,38 @@
       height: 5px;
     }
     ::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.14);
       border-radius: 999px;
     }
     ::-webkit-scrollbar-track {
       background: transparent;
     }
 
-    /* Subtle Pulsing Aura */
-    @keyframes aura-pulse {
-      0%, 100% { opacity: 0.35; transform: scale(0.96); }
-      50% { opacity: 0.65; transform: scale(1.04); }
+    /* Aura Pulse Animation */
+    @keyframes aura-breath {
+      0%, 100% { opacity: 0.35; transform: scale(0.95); }
+      50% { opacity: 0.7; transform: scale(1.05); }
     }
     .aura-glow {
-      animation: aura-pulse 3.5s infinite ease-in-out;
+      animation: aura-breath 3.2s infinite ease-in-out;
     }
   </style>
 </head>
 
-<body class="p-3.5 sm:p-6 md:p-8 flex flex-col items-center justify-start min-h-screen relative">
-  <!-- Subtle Ambient Background -->
+<body class="p-3 sm:p-6 md:p-8 flex flex-col items-center justify-start min-h-screen relative pb-24 sm:pb-8">
+  <!-- Dynamic Ambient Mesh Canvas -->
   <div class="ambient-canvas">
-    <div class="ambient-sphere-1"></div>
-    <div class="ambient-sphere-2"></div>
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+    <div class="ambient-glow-3"></div>
   </div>
 
-  <!-- Main Container -->
+  <!-- Main Apple Glass Window -->
   <main class="w-full max-w-4xl glass-panel p-5 sm:p-8 space-y-6 relative z-10 my-auto">
     
-    <!-- Top Bar: Minimal macOS Header -->
-    <header class="flex items-center justify-between pb-5 border-b border-white/[0.07]">
-      <!-- Left: Traffic Lights & Title -->
+    <!-- Top Bar: macOS Header & Live Status -->
+    <header class="flex flex-wrap items-center justify-between pb-5 border-b border-white/[0.08] gap-3">
+      <!-- Traffic Lights & Title -->
       <div class="flex items-center space-x-3.5">
         <div class="flex items-center space-x-2">
           <span class="traffic-dot traffic-red"></span>
@@ -161,24 +180,36 @@
           <span class="traffic-dot traffic-green"></span>
         </div>
         <div class="h-4 w-[1px] bg-white/10 hidden sm:block"></div>
-        <div class="flex items-center space-x-2">
-          <span class="text-sm font-semibold tracking-tight text-white/90">
-            Sentinel
+        <div class="flex items-center space-x-2.5">
+          <div class="p-1.5 rounded-xl bg-white/[0.06] border border-white/10">
+            <i data-lucide="shield-check" class="w-4 h-4 text-indigo-400"></i>
+          </div>
+          <span class="text-sm sm:text-base font-bold tracking-tight text-white/95">
+            GitHub Streak Sentinel
           </span>
-          <span class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-white/[0.06] text-white/50 border border-white/[0.06]">
-            v2.0 Glass
+          <span class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-indigo-500/15 text-indigo-300 border border-indigo-400/25">
+            macOS Edition
           </span>
         </div>
       </div>
 
-      <!-- Right: Clock & Settings -->
-      <div class="flex items-center space-x-2.5">
-        <div id="liveClock" class="font-mono text-xs text-white/50 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.06]">
+      <!-- Right Header Actions: Bot Status Pill, Clock, Settings -->
+      <div class="flex items-center space-x-2.5 text-xs">
+        <!-- Live Telegram Status Beacon -->
+        <div id="telegramStatusPill" class="flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-medium transition cursor-pointer" onclick="testTelegramPing()" title="Klik untuk tes Ping Bot">
+          <span id="telegramBeaconDot" class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span id="telegramStatusText">Telegram: Online</span>
+        </div>
+
+        <!-- Live Clock -->
+        <div id="liveClock" class="font-mono text-xs text-white/50 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.07] hidden sm:block">
           --:--:--
         </div>
+
+        <!-- Settings Modal Button -->
         <button 
           onclick="openModal('settingsModal')" 
-          class="p-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] transition text-white/60 hover:text-white border border-white/[0.07]"
+          class="p-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.09] transition text-white/70 hover:text-white border border-white/[0.08]"
           title="Pengaturan"
         >
           <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
@@ -186,56 +217,82 @@
       </div>
     </header>
 
-    <!-- HERO CARD: Minimalist Streak Status -->
-    <section class="glass-card p-6 sm:p-7 space-y-5">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+    <!-- HERO SECTION: Apple Activity Flame Ring & Commit Progress -->
+    <section class="glass-card p-6 sm:p-7 space-y-6">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
         
-        <!-- User & Status Info -->
-        <div class="flex items-center space-x-4">
-          <!-- Status Light / Flame Badge -->
+        <!-- Left: Circular Progress Ring with Flame -->
+        <div class="flex items-center space-x-5 w-full sm:w-auto">
           <div class="relative flex items-center justify-center shrink-0">
-            <div id="statusGlow" class="absolute w-14 h-14 rounded-full bg-amber-500/25 aura-glow"></div>
-            <div id="statusIconBox" class="relative w-12 h-12 rounded-2xl flex items-center justify-center bg-white/[0.04] border border-white/10">
+            <!-- Ambient Glow behind Ring -->
+            <div id="statusGlow" class="absolute w-20 h-20 rounded-full bg-amber-500/25 aura-glow"></div>
+            
+            <!-- SVG Progress Ring (Apple Watch Style) -->
+            <svg class="w-20 h-20 transform -rotate-90" viewBox="0 0 80 80">
+              <circle cx="40" cy="40" r="34" stroke-width="6" fill="transparent" class="circle-progress-bg"></circle>
+              <circle 
+                id="svgRingProgress" 
+                cx="40" 
+                cy="40" 
+                r="34" 
+                stroke-width="6" 
+                fill="transparent" 
+                stroke="url(#ringGradient)" 
+                stroke-dasharray="213.6" 
+                stroke-dashoffset="213.6" 
+                class="circle-progress-bar"
+              ></circle>
+              <defs>
+                <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#fbbf24" />
+                  <stop offset="50%" stop-color="#818cf8" />
+                  <stop offset="100%" stop-color="#34d399" />
+                </linearGradient>
+              </defs>
+            </svg>
+
+            <!-- Center Icon -->
+            <div id="statusIconBox" class="absolute w-12 h-12 rounded-2xl flex items-center justify-center bg-white/[0.05] border border-white/10 shadow-inner">
               <i id="statusIcon" data-lucide="flame" class="w-6 h-6 text-amber-400"></i>
             </div>
           </div>
           
-          <div class="space-y-0.5">
+          <div class="space-y-1">
             <div class="flex items-center space-x-2">
-              <span id="targetStatusPill" class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/20">
+              <span id="targetStatusPill" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/25 uppercase tracking-wide">
                 MEMERIKSA
               </span>
-              <span class="text-xs text-white/40 font-mono">@<span id="displayUsername">Tryton47</span></span>
+              <span class="text-xs text-white/50 font-mono">@<span id="displayUsername">Tryton47</span></span>
             </div>
-            <h2 id="mainHeadline" class="text-xl sm:text-2xl font-bold tracking-tight text-white">
+            <h2 id="mainHeadline" class="text-xl sm:text-2xl font-extrabold tracking-tight text-white">
               Menghubungkan ke GitHub...
             </h2>
-            <p id="subHeadline" class="text-xs text-white/50">
-              Target: <b class="text-white/80">9 commit harian</b> (bebas project mana saja)
+            <p id="subHeadline" class="text-xs text-white/60">
+              Target Harian: <b class="text-white/90">9 Commit</b> (bebas di project mana saja)
             </p>
           </div>
         </div>
 
-        <!-- Big Number Indicator -->
-        <div class="flex items-baseline space-x-1.5 self-end sm:self-center px-4 py-2 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
-          <span id="commitCountBig" class="text-3xl sm:text-4xl font-extrabold text-white font-mono">0</span>
-          <span class="text-xs text-white/40 font-mono">/ 9 commit</span>
+        <!-- Right: Commit Numbers Capsule -->
+        <div class="flex items-baseline space-x-2 px-5 py-3 rounded-2xl bg-white/[0.04] border border-white/[0.08] shadow-inner self-stretch sm:self-center justify-center sm:justify-start">
+          <span id="commitCountBig" class="text-4xl sm:text-5xl font-black text-white font-mono">0</span>
+          <span class="text-xs text-white/50 font-mono">/ <span id="targetCommitText">9</span> commit</span>
         </div>
       </div>
 
-      <!-- Slim Progress Bar -->
-      <div class="space-y-2 pt-2 border-t border-white/[0.06]">
+      <!-- Linear Progress Bar & WhatsApp/Telegram Alert Deadline -->
+      <div class="space-y-2 pt-4 border-t border-white/[0.07]">
         <div class="flex items-center justify-between text-xs">
-          <span class="text-white/60 font-medium flex items-center gap-1.5">
-            <i data-lucide="bell-ring" class="w-3.5 h-3.5 text-indigo-400"></i>
-            Pengingat WhatsApp: <b>Jam 18:00 WIB</b> jika &lt; 9 commit
+          <span class="text-white/70 font-medium flex items-center gap-1.5">
+            <i data-lucide="bell" class="w-3.5 h-3.5 text-indigo-400"></i>
+            Peringatan Otomatis: <b>Jam 18:00 WIB</b> jika &lt; 9 commit
           </span>
-          <span id="remainingCountBadge" class="text-amber-300 font-mono font-medium">
+          <span id="remainingCountBadge" class="text-amber-300 font-mono font-semibold">
             Kurang 9 lagi
           </span>
         </div>
         
-        <div class="w-full bg-white/[0.06] h-2 rounded-full overflow-hidden p-[1px] border border-white/[0.06]">
+        <div class="w-full bg-white/[0.07] h-2.5 rounded-full overflow-hidden p-[1px] border border-white/[0.07]">
           <div 
             id="progressBar" 
             class="h-full rounded-full bg-gradient-to-r from-amber-400 via-indigo-400 to-emerald-400 transition-all duration-700 ease-out" 
@@ -245,133 +302,147 @@
       </div>
     </section>
 
-    <!-- ACTION GRID: Minimalist Quick Controls -->
-    <section class="space-y-2.5">
+    <!-- ACTION TILES: Minimalist Quick Controls -->
+    <section class="space-y-3">
       <div class="flex items-center justify-between px-1">
-        <span class="text-xs font-semibold uppercase tracking-wider text-white/40">
-          Remote Controls (Dari PC / HP)
+        <span class="text-xs font-semibold uppercase tracking-wider text-white/50">
+          Pusat Kontrol Cepat (Instant Remote Actions)
         </span>
-        <span class="text-[11px] text-white/30">Instan & Tanpa Lag</span>
+        <span class="text-[11px] text-white/40">Bisa dioperasikan dari PC / HP</span>
       </div>
 
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-        <!-- Action 1: Force Scan -->
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+        <!-- 1. Force Scan -->
         <button onclick="triggerRemoteAction('check')" class="glass-btn p-3.5 flex flex-col items-start gap-2 text-left group">
-          <div class="p-2 rounded-xl bg-blue-500/15 text-blue-400 border border-blue-500/20 group-hover:scale-105 transition">
+          <div class="p-2 rounded-xl bg-blue-500/15 text-blue-400 border border-blue-500/25 group-hover:scale-105 transition">
             <i data-lucide="refresh-cw" class="w-4 h-4"></i>
           </div>
           <div>
             <div class="text-xs font-semibold text-white/90">Scan Live</div>
-            <div class="text-[11px] text-white/40">Cek GitHub detik ini</div>
+            <div class="text-[10px] text-white/50">Cek GitHub detik ini</div>
           </div>
         </button>
 
-        <!-- Action 2: Send WA Alert -->
-        <button onclick="triggerRemoteAction('notif')" class="glass-btn p-3.5 flex flex-col items-start gap-2 text-left group">
-          <div class="p-2 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 group-hover:scale-105 transition">
-            <i data-lucide="message-square" class="w-4 h-4"></i>
+        <!-- 2. Ping Bot Telegram -->
+        <button onclick="testTelegramPing()" class="glass-btn p-3.5 flex flex-col items-start gap-2 text-left group">
+          <div class="p-2 rounded-xl bg-indigo-500/15 text-indigo-400 border border-indigo-500/25 group-hover:scale-105 transition">
+            <i data-lucide="zap" class="w-4 h-4"></i>
           </div>
           <div>
-            <div class="text-xs font-semibold text-white/90">Tes Notif WA</div>
-            <div class="text-[11px] text-white/40">Kirim alert uji coba</div>
+            <div class="text-xs font-semibold text-white/90">Ping Bot</div>
+            <div class="text-[10px] text-white/50">Tes latensi Telegram</div>
           </div>
         </button>
 
-        <!-- Action 3: Open in VS Code -->
+        <!-- 3. Test Toast PC -->
+        <button onclick="triggerRemoteAction('notif')" class="glass-btn p-3.5 flex flex-col items-start gap-2 text-left group">
+          <div class="p-2 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 group-hover:scale-105 transition">
+            <i data-lucide="bell-ring" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <div class="text-xs font-semibold text-white/90">Test Alert</div>
+            <div class="text-[10px] text-white/50">Toast ke monitor PC</div>
+          </div>
+        </button>
+
+        <!-- 4. Open in VS Code -->
         <button onclick="triggerRemoteAction('open')" class="glass-btn p-3.5 flex flex-col items-start gap-2 text-left group">
-          <div class="p-2 rounded-xl bg-purple-500/15 text-purple-400 border border-purple-500/20 group-hover:scale-105 transition">
+          <div class="p-2 rounded-xl bg-purple-500/15 text-purple-400 border border-purple-500/25 group-hover:scale-105 transition">
             <i data-lucide="external-link" class="w-4 h-4"></i>
           </div>
           <div>
             <div class="text-xs font-semibold text-white/90">Buka VS Code</div>
-            <div class="text-[11px] text-white/40">Buka editor di PC</div>
+            <div class="text-[10px] text-white/50">Workspace di PC</div>
           </div>
         </button>
 
-        <!-- Action 4: Auto Commit -->
-        <button onclick="openModal('commitModal')" class="glass-btn p-3.5 flex flex-col items-start gap-2 text-left group">
-          <div class="p-2 rounded-xl bg-amber-500/15 text-amber-400 border border-amber-500/20 group-hover:scale-105 transition">
+        <!-- 5. Auto Commit -->
+        <button onclick="openModal('commitModal')" class="glass-btn p-3.5 flex flex-col items-start gap-2 text-left group col-span-2 sm:col-span-1">
+          <div class="p-2 rounded-xl bg-amber-500/15 text-amber-400 border border-amber-500/25 group-hover:scale-105 transition">
             <i data-lucide="git-commit" class="w-4 h-4"></i>
           </div>
           <div>
             <div class="text-xs font-semibold text-white/90">Auto Commit</div>
-            <div class="text-[11px] text-white/40">+1 commit dari HP</div>
+            <div class="text-[10px] text-white/50">+1 commit dari HP</div>
           </div>
         </button>
       </div>
     </section>
 
-    <!-- DUAL MINIMAL SECTION: WHATSAPP BOT & CONSOLE -->
+    <!-- DUAL COLUMN: TELEGRAM REMOTE HUB & CONSOLE -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       
-      <!-- Card: WhatsApp & HP Hub -->
-      <div class="glass-card p-4 sm:p-5 space-y-3.5 flex flex-col justify-between">
+      <!-- Card: Telegram Remote Hub -->
+      <div class="glass-card p-5 space-y-4 flex flex-col justify-between">
         <div class="space-y-2">
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-2">
-              <i data-lucide="smartphone" class="w-4 h-4 text-emerald-400"></i>
-              <span class="text-xs font-semibold text-white/90">WhatsApp Remote Hub</span>
+              <i data-lucide="send" class="w-4 h-4 text-blue-400"></i>
+              <span class="text-xs font-bold text-white/90">Telegram Bot Remote Hub</span>
             </div>
-            <span class="text-[11px] font-mono text-emerald-400/80 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
-              082141635002
+            <span class="text-[11px] font-mono text-blue-300 bg-blue-500/15 px-2.5 py-0.5 rounded-full border border-blue-500/25">
+              @tryton_streak_bot
             </span>
           </div>
           <p class="text-xs text-white/50 leading-relaxed">
-            Perintah yang bisa kamu kirimkan dari chat WhatsApp kapan saja:
+            Perintah cepat yang bisa kamu klik atau ketik langsung di chat Telegram HP:
           </p>
         </div>
 
         <div class="grid grid-cols-2 gap-2 text-xs font-mono">
-          <button onclick="triggerRemoteAction('status')" class="p-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.05] text-left transition flex items-center justify-between">
-            <span class="text-emerald-400">!status</span>
+          <button onclick="triggerRemoteAction('status')" class="p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.06] text-left transition flex items-center justify-between">
+            <span class="text-emerald-400 font-semibold">/status</span>
             <span class="text-[10px] text-white/40 font-sans">Cek progress</span>
           </button>
-          <button onclick="triggerRemoteAction('check')" class="p-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.05] text-left transition flex items-center justify-between">
-            <span class="text-blue-400">!check</span>
-            <span class="text-[10px] text-white/40 font-sans">Force scan</span>
+          <button onclick="triggerRemoteAction('ping')" class="p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.06] text-left transition flex items-center justify-between">
+            <span class="text-indigo-400 font-semibold">/ping</span>
+            <span class="text-[10px] text-white/40 font-sans">Tes latensi</span>
           </button>
-          <button onclick="triggerRemoteAction('open')" class="p-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.05] text-left transition flex items-center justify-between">
-            <span class="text-purple-400">!open</span>
-            <span class="text-[10px] text-white/40 font-sans">Buka di PC</span>
+          <button onclick="triggerRemoteAction('open')" class="p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.06] text-left transition flex items-center justify-between">
+            <span class="text-purple-400 font-semibold">/open</span>
+            <span class="text-[10px] text-white/40 font-sans">Buka VS Code</span>
           </button>
-          <button onclick="openModal('commitModal')" class="p-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.05] text-left transition flex items-center justify-between">
-            <span class="text-amber-400">!commit</span>
+          <button onclick="openModal('commitModal')" class="p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.06] text-left transition flex items-center justify-between">
+            <span class="text-amber-400 font-semibold">/commit</span>
             <span class="text-[10px] text-white/40 font-sans">Auto push</span>
           </button>
         </div>
 
-        <div class="pt-2 border-t border-white/[0.06] flex items-center justify-between text-[11px] text-white/40">
-          <span>Tautan HP: <code class="text-indigo-300 font-mono">192.168.0.102:8000</code></span>
-          <button onclick="copyText('192.168.0.102:8000')" class="text-white/60 hover:text-white transition">Salin</button>
+        <div class="pt-2.5 border-t border-white/[0.06] flex items-center justify-between text-[11px] text-white/50">
+          <span>Akses HP (Wi-Fi): <code class="text-indigo-300 font-mono">http://192.168.0.102:8000</code></span>
+          <button onclick="copyText('http://192.168.0.102:8000')" class="text-white/70 hover:text-white transition font-medium">Salin</button>
         </div>
       </div>
 
-      <!-- Card: Clean Minimalist Console -->
-      <div class="glass-card p-4 sm:p-5 flex flex-col justify-between space-y-3">
+      <!-- Card: Live Glass Terminal Console -->
+      <div class="glass-card p-5 flex flex-col justify-between space-y-3">
         <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-1.5 text-xs text-white/60 font-mono">
+          <div class="flex items-center space-x-2 text-xs text-white/70 font-mono">
             <i data-lucide="terminal" class="w-3.5 h-3.5 text-indigo-400"></i>
-            <span>console</span>
+            <span>sentinel-console</span>
           </div>
-          <button onclick="clearTerminal()" class="text-[11px] text-white/30 hover:text-white/70 transition">
+          <button onclick="clearTerminal()" class="text-[11px] text-white/35 hover:text-white/80 transition">
             Bersihkan
           </button>
         </div>
 
-        <div id="terminalBody" class="font-mono text-[11px] text-white/70 h-32 overflow-y-auto space-y-1 pr-1">
-          <div class="text-white/30">[Ready] Apple Glass Sentinel aktif.</div>
-          <div class="text-white/30">[Rule] Target harian: 9 commit. Pengingat WA: 18:00 WIB.</div>
+        <!-- Terminal Output -->
+        <div id="terminalBody" class="font-mono text-[11px] text-white/75 h-36 overflow-y-auto space-y-1.5 pr-1">
+          <div class="text-white/35">[System] Apple Glass Sentinel Engine ready.</div>
+          <div class="text-white/35">[Rule] Target harian: 9 commit. Pengingat: 18:00 WIB.</div>
+          <div class="text-indigo-300/80">[Bot] Telegram bot poller connected.</div>
         </div>
 
+        <!-- Terminal Input -->
         <form onsubmit="handleTerminalSubmit(event)" class="flex items-center gap-2 pt-2 border-t border-white/[0.06]">
-          <span class="text-indigo-400 font-mono text-xs">&gt;</span>
+          <span class="text-indigo-400 font-mono text-xs font-bold">&gt;</span>
           <input 
             type="text" 
             id="terminalInput" 
-            placeholder="Ketik perintah (!status, !open)..." 
-            class="flex-1 bg-transparent border-0 outline-none font-mono text-xs text-white placeholder-white/20"
+            placeholder="Ketik perintah (/status, /open, /ping)..." 
+            class="flex-1 bg-transparent border-0 outline-none font-mono text-xs text-white placeholder-white/25"
           />
-          <button type="submit" class="px-2.5 py-1 rounded-lg bg-white/[0.06] hover:bg-white/[0.1] text-xs font-mono text-white/80 transition">
+          <button type="submit" class="px-3 py-1 rounded-xl bg-white/[0.07] hover:bg-white/[0.12] text-xs font-mono text-white/90 transition">
             Kirim
           </button>
         </form>
@@ -381,11 +452,11 @@
 
     <!-- Active Repositories Pill -->
     <div class="px-1 flex flex-wrap items-center gap-2 text-xs">
-      <span class="text-white/40 text-[11px] font-medium flex items-center gap-1">
-        <i data-lucide="folder-git-2" class="w-3 h-3 text-indigo-400"></i> Repositori Aktif:
+      <span class="text-white/50 text-[11px] font-medium flex items-center gap-1.5">
+        <i data-lucide="folder-git-2" class="w-3.5 h-3.5 text-indigo-400"></i> Repositori Aktif:
       </span>
       <div id="repoPills" class="flex flex-wrap gap-1.5">
-        <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-white/[0.03] border border-white/[0.05] text-white/40">
+        <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/40">
           Belum ada aktivitas hari ini
         </span>
       </div>
@@ -393,38 +464,62 @@
 
   </main>
 
-  <!-- TOAST NOTIFICATION -->
-  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none"></div>
+  <!-- FLOATING MOBILE QUICK DOCK (iOS App Style, only on small screens) -->
+  <div class="fixed bottom-4 inset-x-4 max-w-sm mx-auto glass-panel p-2 flex items-center justify-around sm:hidden z-40 border-white/15 shadow-2xl">
+    <button onclick="triggerRemoteAction('check')" class="p-2 text-white/70 hover:text-white flex flex-col items-center gap-0.5">
+      <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+      <span class="text-[9px]">Scan</span>
+    </button>
+    <button onclick="triggerRemoteAction('open')" class="p-2 text-white/70 hover:text-white flex flex-col items-center gap-0.5">
+      <i data-lucide="external-link" class="w-4 h-4"></i>
+      <span class="text-[9px]">VSCode</span>
+    </button>
+    <button onclick="openModal('commitModal')" class="p-2 text-amber-400 flex flex-col items-center gap-0.5">
+      <i data-lucide="git-commit" class="w-4 h-4"></i>
+      <span class="text-[9px] font-semibold">Push</span>
+    </button>
+    <button onclick="testTelegramPing()" class="p-2 text-indigo-400 flex flex-col items-center gap-0.5">
+      <i data-lucide="zap" class="w-4 h-4"></i>
+      <span class="text-[9px]">Ping</span>
+    </button>
+    <button onclick="openModal('settingsModal')" class="p-2 text-white/70 hover:text-white flex flex-col items-center gap-0.5">
+      <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
+      <span class="text-[9px]">Config</span>
+    </button>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col space-y-2 pointer-events-none"></div>
 
   <!-- MODAL: AUTO COMMIT -->
-  <div id="commitModal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
-    <div class="glass-panel max-w-sm w-full p-5 space-y-4 shadow-2xl">
+  <div id="commitModal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="glass-panel max-w-sm w-full p-6 space-y-4 shadow-2xl border-amber-500/30">
       <div class="flex items-center justify-between">
         <div class="flex items-center space-x-2">
-          <i data-lucide="git-commit" class="w-4 h-4 text-amber-400"></i>
-          <h3 class="text-sm font-semibold text-white">Auto-Commit Instan</h3>
+          <i data-lucide="git-commit" class="w-5 h-5 text-amber-400"></i>
+          <h3 class="text-sm font-bold text-white">Auto-Commit Penyelamat Streak</h3>
         </div>
         <button onclick="closeModal('commitModal')" class="text-white/40 hover:text-white">
-          <i data-lucide="x" class="w-4 h-4"></i>
+          <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
-      <p class="text-xs text-white/60 leading-relaxed">
-        Menambahkan timestamp ke repository kamu lalu otomatis melakukan <code>git push</code> agar streak & target commit bertambah!
+      <p class="text-xs text-white/65 leading-relaxed">
+        Menambahkan catatan timestamp ke repo kamu lalu mengeksekusi <code>git add</code>, <code>commit</code>, dan <code>push</code> instan ke GitHub!
       </p>
       <div>
-        <label class="block text-[11px] font-medium text-white/70 mb-1">Pesan Commit (Opsional)</label>
+        <label class="block text-[11px] font-semibold text-white/80 mb-1">Pesan Commit (Opsional)</label>
         <input 
           type="text" 
           id="customCommitMsg" 
-          placeholder="chore: streak sentinel progress" 
-          class="w-full px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white text-xs outline-none focus:border-amber-400/50"
+          placeholder="chore: update streak progress" 
+          class="w-full px-3 py-2 rounded-xl bg-white/[0.05] border border-white/10 text-white text-xs outline-none focus:border-amber-400/50"
         />
       </div>
       <div class="flex justify-end gap-2 pt-1">
-        <button onclick="closeModal('commitModal')" class="px-3 py-1.5 rounded-xl bg-white/[0.04] text-white/60 text-xs">
+        <button onclick="closeModal('commitModal')" class="px-3.5 py-1.5 rounded-xl bg-white/[0.05] text-white/70 text-xs font-semibold">
           Batal
         </button>
-        <button onclick="executeEmergencyCommit()" class="px-4 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-black text-xs font-semibold transition">
+        <button onclick="executeEmergencyCommit()" class="px-4 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold transition shadow-lg shadow-amber-400/20">
           Commit & Push
         </button>
       </div>
@@ -432,12 +527,12 @@
   </div>
 
   <!-- MODAL: SETTINGS -->
-  <div id="settingsModal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
+  <div id="settingsModal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-md flex items-center justify-center p-4">
     <div class="glass-panel max-w-md w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between pb-3 border-b border-white/[0.07]">
+      <div class="flex items-center justify-between pb-3 border-b border-white/[0.08]">
         <div class="flex items-center space-x-2">
           <i data-lucide="sliders-horizontal" class="w-4 h-4 text-indigo-400"></i>
-          <h3 class="text-sm font-semibold text-white">Pengaturan Sentinel</h3>
+          <h3 class="text-sm font-bold text-white">Pengaturan Sentinel</h3>
         </div>
         <button onclick="closeModal('settingsModal')" class="text-white/40 hover:text-white">
           <i data-lucide="x" class="w-4 h-4"></i>
@@ -446,66 +541,68 @@
 
       <form id="settingsForm" onsubmit="saveSettings(event)" class="space-y-3.5 text-xs">
         <div>
-          <label class="block font-medium text-white/70 mb-1">GitHub Username</label>
-          <input type="text" id="cfgGithubUser" class="w-full px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white outline-none focus:border-indigo-400" required />
+          <label class="block font-semibold text-white/80 mb-1">GitHub Username</label>
+          <input type="text" id="cfgGithubUser" class="w-full px-3 py-2 rounded-xl bg-white/[0.05] border border-white/10 text-white outline-none focus:border-indigo-400" required />
         </div>
 
         <div>
-          <label class="block font-medium text-white/70 mb-1">GitHub PAT Token (Opsional, untuk membaca repo private)</label>
-          <input type="password" id="cfgGithubToken" placeholder="ghp_xxxx" class="w-full px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white outline-none focus:border-indigo-400" />
+          <label class="block font-semibold text-white/80 mb-1">GitHub PAT Token (Opsional, untuk membaca repo private)</label>
+          <input type="password" id="cfgGithubToken" placeholder="ghp_xxxx" class="w-full px-3 py-2 rounded-xl bg-white/[0.05] border border-white/10 text-white outline-none focus:border-indigo-400" />
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-medium text-white/70 mb-1">Target Commit Harian</label>
-            <input type="number" id="cfgMinCommits" min="1" max="100" class="w-full px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white outline-none focus:border-indigo-400" value="9" required />
+            <label class="block font-semibold text-white/80 mb-1">Target Commit Harian</label>
+            <input type="number" id="cfgMinCommits" min="1" max="100" class="w-full px-3 py-2 rounded-xl bg-white/[0.05] border border-white/10 text-white outline-none focus:border-indigo-400" value="9" required />
           </div>
           <div>
-            <label class="block font-medium text-white/70 mb-1">Jam Peringatan WA (WIB)</label>
-            <input type="number" id="cfgReminderHour" min="0" max="23" class="w-full px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white outline-none focus:border-indigo-400" value="18" required />
+            <label class="block font-semibold text-white/80 mb-1">Jam Peringatan (WIB)</label>
+            <input type="number" id="cfgReminderHour" min="0" max="23" class="w-full px-3 py-2 rounded-xl bg-white/[0.05] border border-white/10 text-white outline-none focus:border-indigo-400" value="18" required />
           </div>
         </div>
 
         <div>
-          <label class="block font-medium text-white/70 mb-1">Default Workspace Path (PC)</label>
-          <input type="text" id="cfgProjectPath" class="w-full px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-white outline-none focus:border-indigo-400" required />
+          <label class="block font-semibold text-white/80 mb-1">Default Workspace Path (PC)</label>
+          <input type="text" id="cfgProjectPath" class="w-full px-3 py-2 rounded-xl bg-white/[0.05] border border-white/10 text-white outline-none focus:border-indigo-400" required />
         </div>
 
-        <div class="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 space-y-2.5">
+        <!-- Telegram Configuration Section -->
+        <div class="p-3.5 rounded-2xl bg-blue-500/10 border border-blue-500/25 space-y-2.5">
           <div class="flex items-center justify-between">
-            <span class="font-semibold text-blue-400 flex items-center gap-1.5">
-              <i data-lucide="send" class="w-3.5 h-3.5"></i> Telegram Bot (Paling Mudah & Gratis)
+            <span class="font-bold text-blue-400 flex items-center gap-1.5">
+              <i data-lucide="send" class="w-3.5 h-3.5"></i> Telegram Bot (Aktif & Rekomendasi)
             </span>
-            <span class="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full">Rekomendasi</span>
+            <span class="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full font-mono">100% Gratis</span>
           </div>
           <div>
-            <label class="block text-white/60 mb-1">Telegram Bot Token (dari @BotFather)</label>
-            <input type="password" id="cfgTgToken" placeholder="123456789:ABCdefGhIjk..." class="w-full px-3 py-1.5 rounded-lg bg-black/40 border border-white/10 text-white outline-none focus:border-blue-400" />
+            <label class="block text-white/70 mb-1">Telegram Bot Token (dari @BotFather)</label>
+            <input type="password" id="cfgTgToken" placeholder="9104924567:AAHI..." class="w-full px-3 py-1.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none focus:border-blue-400" />
           </div>
           <div>
-            <label class="block text-white/60 mb-1">Telegram Chat ID (dari @userinfobot)</label>
-            <input type="text" id="cfgTgChatId" placeholder="contoh: 123456789" class="w-full px-3 py-1.5 rounded-lg bg-black/40 border border-white/10 text-white outline-none focus:border-blue-400" />
+            <label class="block text-white/70 mb-1">Telegram Chat ID (terdeteksi otomatis saat ketik /start)</label>
+            <input type="text" id="cfgTgChatId" placeholder="9288483071" class="w-full px-3 py-1.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none focus:border-blue-400" />
           </div>
         </div>
 
-        <div class="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-2.5">
-          <span class="font-semibold text-emerald-400 block">WhatsApp Provider (Opsional / Fonnte)</span>
+        <!-- WhatsApp Configuration Section -->
+        <div class="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.06] space-y-2.5">
+          <span class="font-bold text-emerald-400 block">WhatsApp Provider (Opsional / Fonnte)</span>
           <div>
-            <label class="block text-white/60 mb-1">Nomor WhatsApp Tujuan</label>
-            <input type="text" id="cfgWaPhone" value="082141635002" class="w-full px-3 py-1.5 rounded-lg bg-black/40 border border-white/10 text-white outline-none" />
+            <label class="block text-white/60 mb-1">Nomor WhatsApp</label>
+            <input type="text" id="cfgWaPhone" value="082141635002" class="w-full px-3 py-1.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none" />
           </div>
           <div>
-            <label class="block text-white/60 mb-1">Fonnte API Token (fonnte.com)</label>
-            <input type="password" id="cfgFonnteToken" placeholder="Token API" class="w-full px-3 py-1.5 rounded-lg bg-black/40 border border-white/10 text-white outline-none" />
+            <label class="block text-white/60 mb-1">Fonnte API Token</label>
+            <input type="password" id="cfgFonnteToken" placeholder="Token API fonnte" class="w-full px-3 py-1.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none" />
           </div>
         </div>
 
         <div class="flex justify-end gap-2 pt-2">
-          <button type="button" onclick="closeModal('settingsModal')" class="px-3.5 py-1.5 rounded-xl bg-white/[0.04] text-white/60">
+          <button type="button" onclick="closeModal('settingsModal')" class="px-4 py-2 rounded-xl bg-white/[0.05] text-white/70 font-semibold">
             Tutup
           </button>
-          <button type="submit" class="px-4 py-1.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 text-white font-semibold transition">
-            Simpan
+          <button type="submit" class="px-5 py-2 rounded-xl bg-indigo-500 hover:bg-indigo-400 text-white font-bold transition shadow-lg shadow-indigo-500/25">
+            Simpan Konfigurasi
           </button>
         </div>
       </form>
@@ -528,17 +625,17 @@
       const time = new Date().toLocaleTimeString('id-ID');
       
       if (type === "cmd") {
-        div.className = "text-indigo-300";
-        div.innerHTML = `<span class="text-white/30">[${time}]</span> &gt; ${escapeHtml(text)}`;
+        div.className = "text-indigo-300 font-semibold";
+        div.innerHTML = `<span class="text-white/35">[${time}]</span> &gt; ${escapeHtml(text)}`;
       } else if (type === "success") {
         div.className = "text-emerald-400";
-        div.innerHTML = `<span class="text-white/30">[${time}]</span> ${escapeHtml(text).replace(/\n/g, '<br/>')}`;
+        div.innerHTML = `<span class="text-white/35">[${time}]</span> ${escapeHtml(text).replace(/\n/g, '<br/>')}`;
       } else if (type === "error") {
-        div.className = "text-red-400";
-        div.innerHTML = `<span class="text-white/30">[${time}]</span> ${escapeHtml(text).replace(/\n/g, '<br/>')}`;
+        div.className = "text-rose-400";
+        div.innerHTML = `<span class="text-white/35">[${time}]</span> ${escapeHtml(text).replace(/\n/g, '<br/>')}`;
       } else {
-        div.className = "text-white/70";
-        div.innerHTML = `<span class="text-white/30">[${time}]</span> ${escapeHtml(text).replace(/\n/g, '<br/>')}`;
+        div.className = "text-white/75";
+        div.innerHTML = `<span class="text-white/35">[${time}]</span> ${escapeHtml(text).replace(/\n/g, '<br/>')}`;
       }
 
       tb.appendChild(div);
@@ -559,28 +656,29 @@
     function showToast(message, type = "info") {
       const container = document.getElementById('toastContainer');
       const toast = document.createElement('div');
-      toast.className = "glass-panel px-4 py-2.5 text-xs font-medium text-white pointer-events-auto flex items-center gap-2 border-white/10 shadow-2xl transition duration-300 transform translate-y-2 opacity-0";
+      toast.className = "glass-panel px-4 py-2.5 text-xs font-semibold text-white pointer-events-auto flex items-center gap-2 border-white/15 shadow-2xl transition duration-300 transform translate-y-2 opacity-0";
       
       let icon = "info";
-      if (type === "success") icon = "check";
+      if (type === "success") icon = "check-circle-2";
       if (type === "error") icon = "alert-circle";
+      if (type === "warning") icon = "alert-triangle";
 
-      toast.innerHTML = `<i data-lucide="${icon}" class="w-3.5 h-3.5 text-indigo-400"></i> <span>${message}</span>`;
+      toast.innerHTML = `<i data-lucide="${icon}" class="w-4 h-4 text-indigo-400"></i> <span>${message}</span>`;
       container.appendChild(toast);
       lucide.createIcons();
 
-      setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 50);
+      setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 40);
       setTimeout(() => {
         toast.classList.add('opacity-0', 'translate-y-2');
-        setTimeout(() => toast.remove(), 300);
-      }, 3000);
+        setTimeout(() => toast.remove(), 320);
+      }, 3200);
     }
 
     function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
     function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
 
     function copyText(text) {
-      navigator.clipboard.writeText(text).then(() => showToast("Tautan disalin!", "success"));
+      navigator.clipboard.writeText(text).then(() => showToast("Tautan disalin ke clipboard!", "success"));
     }
 
     async function fetchStatus() {
@@ -596,6 +694,7 @@
     function renderStatus(data) {
       document.getElementById('displayUsername').textContent = data.username;
       document.getElementById('commitCountBig').textContent = data.commit_count;
+      document.getElementById('targetCommitText').textContent = data.target_commits || 9;
       
       const count = data.commit_count;
       const target = data.target_commits || 9;
@@ -608,30 +707,52 @@
       const remainingBadge = document.getElementById('remainingBadge');
       const statusGlow = document.getElementById('statusGlow');
       const statusIcon = document.getElementById('statusIcon');
+      const ringProgress = document.getElementById('svgRingProgress');
 
+      // Update Linear Bar
       progressBar.style.width = `${percent}%`;
 
+      // Update Circular SVG Ring (Circumference 213.6 = 2 * PI * 34)
+      const circumference = 213.6;
+      const offset = circumference - (percent / 100) * circumference;
+      ringProgress.style.strokeDashoffset = offset;
+
+      // Update Telegram Status Pill
+      const tgPill = document.getElementById('telegramStatusPill');
+      const tgBeacon = document.getElementById('telegramBeaconDot');
+      const tgText = document.getElementById('telegramStatusText');
+
+      if (data.telegram_active) {
+        tgPill.className = "flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-[11px] font-medium transition cursor-pointer";
+        tgBeacon.className = "w-2 h-2 rounded-full bg-emerald-400 animate-ping";
+        tgText.textContent = data.telegram_connected ? "Telegram: Online" : "Telegram: Siap";
+      } else {
+        tgPill.className = "flex items-center space-x-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-400 text-[11px] font-medium transition cursor-pointer";
+        tgBeacon.className = "w-2 h-2 rounded-full bg-amber-400";
+        tgText.textContent = "Telegram: Setup";
+      }
+
       if (data.committed) {
-        pill.className = "text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20";
+        pill.className = "text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 uppercase tracking-wide";
         pill.textContent = `TARGET TERCAPAI (${count}/${target})`;
         headline.textContent = `Target Harian Aman (${count} Commit) 🎉`;
-        headline.className = "text-xl sm:text-2xl font-bold tracking-tight text-emerald-300";
+        headline.className = "text-xl sm:text-2xl font-extrabold tracking-tight text-emerald-300";
 
-        remainingBadge.className = "text-emerald-300 font-mono font-medium";
+        remainingBadge.className = "text-emerald-300 font-mono font-semibold";
         remainingBadge.textContent = "Target 9 commit terpenuhi ✅";
 
-        statusGlow.className = "absolute w-14 h-14 rounded-full bg-emerald-500/25 aura-glow";
+        statusGlow.className = "absolute w-20 h-20 rounded-full bg-emerald-500/30 aura-glow";
         statusIcon.className = "w-6 h-6 text-emerald-400";
       } else {
-        pill.className = "text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/20";
+        pill.className = "text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30 uppercase tracking-wide";
         pill.textContent = `PROGRESS: ${count}/${target} COMMIT`;
         headline.textContent = `Baru ${count} dari ${target} Commit Hari Ini`;
-        headline.className = "text-xl sm:text-2xl font-bold tracking-tight text-amber-300";
+        headline.className = "text-xl sm:text-2xl font-extrabold tracking-tight text-amber-300";
 
-        remainingBadge.className = "text-amber-300 font-mono font-medium";
+        remainingBadge.className = "text-amber-300 font-mono font-semibold";
         remainingBadge.textContent = `Kurang ${remaining} commit lagi`;
 
-        statusGlow.className = "absolute w-14 h-14 rounded-full bg-amber-500/25 aura-glow";
+        statusGlow.className = "absolute w-20 h-20 rounded-full bg-amber-500/30 aura-glow";
         statusIcon.className = "w-6 h-6 text-amber-400";
       }
 
@@ -639,18 +760,18 @@
       const pillsContainer = document.getElementById('repoPills');
       if (data.repos && data.repos.length > 0) {
         pillsContainer.innerHTML = data.repos.map(r => `
-          <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-white/70 font-mono">
-            ${r}
+          <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-white/[0.05] border border-white/[0.09] text-white/80 font-mono flex items-center gap-1">
+            <i data-lucide="git-branch" class="w-3 h-3 text-indigo-400"></i> ${r}
           </span>
         `).join('');
       } else {
-        pillsContainer.innerHTML = `<span class="text-[11px] px-2.5 py-0.5 rounded-full bg-white/[0.02] border border-white/[0.04] text-white/30">Belum ada aktivitas hari ini</span>`;
+        pillsContainer.innerHTML = `<span class="text-[11px] px-2.5 py-0.5 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/40">Belum ada aktivitas hari ini</span>`;
       }
       lucide.createIcons();
     }
 
     async function triggerRemoteAction(action) {
-      printTerm(`Action: ${action}...`, "cmd");
+      printTerm(`Action: /${action}...`, "cmd");
       showToast(`Menjalankan: ${action}...`, "info");
       
       try {
@@ -661,10 +782,29 @@
         });
         const data = await res.json();
         printTerm(data.output, "success");
-        showToast("Perintah berhasil!", "success");
+        showToast("Perintah berhasil dieksekusi!", "success");
         fetchStatus();
       } catch (err) {
         printTerm(`Gagal: ${err}`, "error");
+        showToast("Gagal menjalankan perintah", "error");
+      }
+    }
+
+    async function testTelegramPing() {
+      showToast("Mengirim ping ke Telegram...", "info");
+      printTerm("Ping test to Telegram Bot...", "cmd");
+      try {
+        const res = await fetch('/api/telegram/ping', { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+          showToast("🏓 Pong! Pesan terkirim ke Telegram!", "success");
+          printTerm("🏓 Pong! Telegram Bot merespon dengan sukses.", "success");
+        } else {
+          showToast("Gagal ping bot (Cek koneksi/token)", "error");
+          printTerm("Gagal ping bot: token atau chat_id belum siap.", "error");
+        }
+      } catch (e) {
+        showToast("Error saat ping bot", "error");
       }
     }
 
@@ -682,10 +822,10 @@
         });
         const data = await res.json();
         printTerm(data.output, "success");
-        showToast("Commit berhasil!", "success");
+        showToast("Commit berhasil ditambahkan!", "success");
         fetchStatus();
       } catch (err) {
-        printTerm(`Error: ${err}`, "error");
+        printTerm(`Error commit: ${err}`, "error");
       }
     }
 
@@ -750,17 +890,17 @@
           body: JSON.stringify(payload)
         });
         const d = await res.json();
-        showToast(d.message || "Tersimpan!", "success");
+        showToast(d.message || "Pengaturan disimpan!", "success");
         closeModal('settingsModal');
         fetchStatus();
       } catch (err) {
-        showToast("Gagal menyimpan", "error");
+        showToast("Gagal menyimpan pengaturan", "error");
       }
     }
 
     loadSettings();
     fetchStatus();
-    setInterval(fetchStatus, 30000);
+    setInterval(fetchStatus, 20000);
   </script>
 </body>
 </html>
